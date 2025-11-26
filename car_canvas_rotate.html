@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Car Rotation</title>
+  <style>
+    canvas {
+      background: #f0f0f0;
+      display: block;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+    }
+    body {
+      text-align: center;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Car Rotation Canvas</h1>
+  <canvas id="carCanvas" width="500" height="500"></canvas>
+  <br>
+  <button onclick="rotateLeft()">Rotate Left</button>
+  <button onclick="rotateRight()">Rotate Right</button>
+  <button onclick="attack()">shoot</button>
+
+  <script>
+    const canvas = document.getElementById('carCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let angle = 0;
+    const carWidth = 60;
+    const carHeight = 30;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const bulletPosX = canvas.width / 2;
+    const bulletPosY = canvas.height / 2;
+
+    function drawCar() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(angle);
+
+      // tank body
+      ctx.fillStyle = 'dark green';
+      ctx.fillRect(-carWidth / 2, -carHeight / 2, carWidth, carHeight);
+
+      // tank head
+      ctx.fillStyle = 'red';
+      ctx.fillRect(-10, -7, carWidth / 4, carHeight / 2);
+      // gun tank
+      ctx.fillStyle = 'green';
+      ctx.fillRect(-10, -4, 50, 8);
+      ctx.restore();
+    }
+    function drawBullet() {
+      ctx.save();
+      ctx.translate(bulletPosX, bulletPosY);
+      ctx.rotate(angle);
+
+      // bullet
+      ctx.fillStyle = 'brown';
+      ctx.fillRect(0, 0, 7, 5);
+
+      ctx.restore();
+    }
+    function attack() {
+      drawBullet()
+      
+    }
+
+    function rotateLeft() {
+      angle -= Math.PI / 12; // 15 degrees
+      drawCar();
+    }
+
+    function rotateRight() {
+      angle += Math.PI / 12;
+      drawCar();
+    }
+
+    drawCar();
+  </script>
+</body>
+</html>
